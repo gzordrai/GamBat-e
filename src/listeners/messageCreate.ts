@@ -8,6 +8,6 @@ export default (client: Client, database: JsonDB): void => {
         if(!(await database.exists(`/${authorId}`)))
             await database.push(`/${authorId}`, { points: 0, vocal: null }, true);
 
-        await database.push(`/${authorId}/points`, await database.getData(`/${authorId}/points`) + parseInt(process.env.MESSAGE_POINTS!), true);
+        await database.push(`/${authorId}/points`, await database.getData(`/${authorId}/points`) + parseFloat(process.env.MESSAGE_POINTS!), true);
     });
 }; 
