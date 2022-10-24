@@ -3,15 +3,15 @@ import { JsonDB } from "node-json-db";
 import { commands } from "../commands";
 import { ICommand } from "../ICommand";
 
-export default (client: Client, database: JsonDB): void => {
+export default (client: Client): void => {
     client.on("interactionCreate", async (interaction: Interaction) => {
 
         if (interaction.isCommand())
-            await handleSlashCommand(client, interaction, database);
+            await handleSlashCommand(client, interaction);
     })
 }
 
-const handleSlashCommand = async (client: Client, interaction: CommandInteraction, database: JsonDB): Promise<void> => {
+const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {
     const slashCommand: ICommand | undefined = commands.find((c: ICommand) => c.name === interaction.commandName);
 
     if (!slashCommand) {
@@ -20,5 +20,5 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
     }
 
     await interaction.deferReply();
-    slashCommand.run(client, interaction, database);
+    slashCommand.run(client, interaction);
 }

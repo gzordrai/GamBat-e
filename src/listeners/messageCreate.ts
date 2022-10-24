@@ -1,13 +1,13 @@
 import { Client, Message } from "discord.js";
-import { JsonDB } from "node-json-db";
+import { CooldownType, User } from "../database";
 
-export default (client: Client, database: JsonDB): void => {
+export default (client: Client): void => {
     client.on("messageCreate", async (message: Message) => {
-        const authorId: string = message.author.id;
+        const user: User = await new User(message.author.id).create();
 
-        if(!(await database.exists(`/${authorId}`)))
-            await database.push(`/${authorId}`, { points: 0, vocal: null }, true);
-
-        await database.push(`/${authorId}/points`, await database.getData(`/${authorId}/points`) + parseFloat(process.env.MESSAGE_POINTS!), true);
+        if((await user.getCooldown(CooldownType.Message)).isFinished(parseInt(process.env.MESSAGE_COOLDOWN!))) {
+            user.addPoints(parseInt(process.env.MESSAGE_POINTS!));
+            user.setCooldown(CooldownType.Message);
+        }
     });
 }; 
