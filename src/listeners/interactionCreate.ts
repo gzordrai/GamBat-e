@@ -1,5 +1,4 @@
 import { CommandInteraction, Client, Interaction } from "discord.js";
-import { JsonDB } from "node-json-db";
 import { commands } from "../commands";
 import { ICommand } from "../ICommand";
 
