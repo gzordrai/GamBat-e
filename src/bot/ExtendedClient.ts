@@ -2,7 +2,7 @@ import { Client, ClientOptions, Collection, GatewayIntentBits, Partials  } from 
 import { Prediction } from "../database";
 
 export class ExtendedClient extends Client {
-    public predictions: Collection<string, Prediction> = new Collection<string, Prediction>();
+    public predictions: Collection<number, Prediction> = new Collection<number, Prediction>();
 
     public constructor(options: ClientOptions) {
         super(options);
