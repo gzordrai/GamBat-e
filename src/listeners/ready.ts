@@ -1,11 +1,9 @@
 import { Client } from "discord.js";
-import { commands } from "../commands";
+import { commands } from "../bot/commands";
 
-export default (client: Client): void => {
-    client.on("ready", async () => {
-        if (!client.user || !client.application) return;
+export const ready = async (client: Client): Promise<void> => {
+    if(!client.user || !client.application) return;
 
-        await client.application.commands.set(commands);
-        console.log(`${client.user.username} is online !`);
-    });
-}; 
+    await client.application.commands.set(commands);
+    console.log(`${client.user.username} is online !`);
+}

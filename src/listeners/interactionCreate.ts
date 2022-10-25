@@ -1,23 +1,27 @@
-import { CommandInteraction, Client, Interaction } from "discord.js";
-import { commands } from "../commands";
-import { ICommand } from "../ICommand";
+import { CommandInteraction, Client, Interaction, ButtonInteraction } from "discord.js";
+import { Prediction } from "../database/Prediction";
+import { commands } from "../bot/commands";
+import { ICommand } from "../bot/ICommand";
+import { ExtendedClient } from "src/bot/ExtendedClient";
 
-export default (client: Client): void => {
-    client.on("interactionCreate", async (interaction: Interaction) => {
-
-        if (interaction.isCommand())
-            await handleSlashCommand(client, interaction);
-    })
+export const interactionCreate = async (client: ExtendedClient, interaction: Interaction): Promise<void> => {
+    if (interaction.isCommand())
+        await handleSlashCommand(client, interaction);
+    else if(interaction.isButton())
+        await handleButton(client, interaction);
 }
 
-const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {
+const handleSlashCommand = async (client: ExtendedClient, interaction: CommandInteraction): Promise<void> => {
     const slashCommand: ICommand | undefined = commands.find((c: ICommand) => c.name === interaction.commandName);
 
-    if (!slashCommand) {
+    if (!slashCommand)
         interaction.followUp({ content: "An error has occurred" });
-        return;
+    else {
+        await interaction.deferReply();
+        slashCommand.run(client, interaction);
     }
+}
 
-    await interaction.deferReply();
-    slashCommand.run(client, interaction);
+const handleButton = async (client: ExtendedClient, interaction: ButtonInteraction): Promise<void> => {
+
 }

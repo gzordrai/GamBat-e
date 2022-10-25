@@ -4,7 +4,7 @@
   "description": "Discord bot for the server \"La communauté de la batée\"",
   "main": "bot.ts",
   "scripts": {
-    "start": "ts-node src/bot.ts"
+    "start": "ts-node src/index.ts"
   },
   "repository": "https://github.com/gzordrai/GamBat-e.git",
   "author": "gzordrai <40698142+gzordrai@users.noreply.github.com>",
