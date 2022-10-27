@@ -1,5 +1,6 @@
 import { VoiceState } from "discord.js";
-import { CooldownType, User } from "../database";
+import { CooldownType } from "../utils/cooldowns";
+import { User } from "../database";
 
 export const voiceStateUpdate = async (oldState: VoiceState, newState: VoiceState): Promise<void> => {
     const user: User = await new User(oldState.member?.id!).create();
