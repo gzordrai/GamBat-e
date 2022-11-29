@@ -1,10 +1,3 @@
-import { Client, ClientOptions, Collection, GatewayIntentBits, Partials  } from "discord.js";
-import { Prediction } from "../database";
+import { Client } from "discord.js";
 
-export class ExtendedClient extends Client {
-    public predictions: Collection<number, Prediction> = new Collection<number, Prediction>();
-
-    public constructor(options: ClientOptions) {
-        super(options);
-    }
-}
+export class ExtendedClient extends Client {}

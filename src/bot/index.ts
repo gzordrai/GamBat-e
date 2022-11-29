@@ -1,3 +1,3 @@
-export * from "./commands";
+export * from "./Command";
+export * from "./Event";
 export * from "./ExtendedClient";
-export * from "./ICommand";
