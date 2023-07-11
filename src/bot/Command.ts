@@ -2,5 +2,5 @@ import { ChatInputCommandInteraction, CommandInteraction, SlashCommandBuilder, S
 
 export interface Command {
     data: SlashCommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
-    execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+    execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<void>;
 }
