@@ -13,7 +13,7 @@ interface IUserMethods {
     has: (amount: number) => Promise<boolean>;
 }
 
-export interface IUserModel extends Model<IUser> {
+export interface IUserModel extends Model<IUser, {}, IUserMethods> {
     findOneOrCreate: (condition: any, schema: any) => Promise<any>;
 }
 
