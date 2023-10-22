@@ -29,7 +29,7 @@ UserSchema.methods.addToBalance = async function (amount: number): Promise<void>
 }
 
 UserSchema.methods.subsFromBalance = async function (amount: number): Promise<void> {
-    if (!this.has(amount))
+    if (! await this.has(amount))
         throw new InsufficientBalanceError();
 
     this.balance -= amount;
