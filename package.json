@@ -4,7 +4,8 @@
   "description": "Discord bot for the server \"La communauté de la batée\"",
   "main": "bot.ts",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "test": "mocha --require ts-node/register tests/**/*.spec.ts"
   },
   "repository": "https://github.com/gzordrai/GamBat-e.git",
   "author": "gzordrai <40698142+gzordrai@users.noreply.github.com>",
@@ -16,7 +17,11 @@
     "mongoose": "^7.3.3"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.9",
+    "@types/mocha": "^10.0.3",
     "@types/node": "^18.11.4",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
