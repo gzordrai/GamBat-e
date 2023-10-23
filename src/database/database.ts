@@ -9,8 +9,6 @@ const MONGODB_URI: string = `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_POR
 
 const connection: Connection = createConnection(MONGODB_URI);
 
-console.log(MONGODB_URI);
-
 connection.on("connected", () => console.log(`Connected to database`));
 connection.on("disconnected", () => console.log(`Disconnected to database`));
 connection.on("error", () => {});
