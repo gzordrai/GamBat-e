@@ -5,7 +5,7 @@
   "main": "bot.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "NODE_ENV=test mocha --require ts-node/register tests/**/*.spec.ts"
+    "test": "NODE_ENV=test mocha --require ts-node/register --exit tests/**/*.spec.ts"
   },
   "repository": "https://github.com/gzordrai/GamBat-e.git",
   "author": "gzordrai <40698142+gzordrai@users.noreply.github.com>",
