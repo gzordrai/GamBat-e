@@ -1,6 +1,6 @@
 import { Events, Interaction } from "discord.js";
 import { Command, Event, ExtendedClient } from "../bot";
-import { handleAutocomplete, handleModal } from "../handlers/";
+import { handleAutocomplete, handleButtons, handleModal } from "../handlers/";
 
 const event: Event = {
     name: Events.InteractionCreate,
@@ -26,9 +26,11 @@ const event: Event = {
                     await command.execute(interaction, client);
                 }
             } else if (interaction.isModalSubmit()) {
-                await interaction.deferReply({ ephemeral: false });
+                await interaction.deferReply({ ephemeral: interaction.customId.startsWith("bet") ? true : false });
                 await handleModal(interaction, client);
-            } else if (interaction.isAutocomplete())
+            } else if (interaction.isButton())
+                await handleButtons(interaction);
+            else if (interaction.isAutocomplete())
                 await handleAutocomplete(interaction, client);
         }
     },
