@@ -54,8 +54,6 @@ const handleBetModal = async (interaction: ModalSubmitInteraction<"cached">, cli
         return;
     }
 
-    console.log(interaction.customId.split('-'));
-
     prediction.addBet({
         userId: interaction.user.id,
         choice: parseInt(interaction.customId.split('-')[2]),
