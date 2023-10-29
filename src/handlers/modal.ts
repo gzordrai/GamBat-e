@@ -1,6 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, ModalSubmitInteraction } from "discord.js";
 import { ExtendedClient } from "../bot";
 import { Prediction } from "../prediction";
+import { User } from "../database/models/user.model";
 
 export const handleModal = async (interaction: ModalSubmitInteraction<"cached">, client: ExtendedClient): Promise<void> => {
     switch (interaction.customId.split('-')[0]) {
@@ -54,9 +55,16 @@ const handleBetModal = async (interaction: ModalSubmitInteraction<"cached">, cli
         return;
     }
 
+    const user = await User.findOneOrCreate({ id: interaction.user.id }, { id: interaction.user.id });
+
+    if (!(await user.has(bet)))
+        interaction.followUp({ content: "Vous n'avez pas assez de points pour faire ce pari.", ephemeral: true });
+    else
+        await user.subsFromBalance(bet);
+
     prediction.addBet({
         userId: interaction.user.id,
-        choice: parseInt(interaction.customId.split('-')[2]),
+        choice: parseInt(interaction.customId.split('-')[3]),
         amount: bet
     });
 }
