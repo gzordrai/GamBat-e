@@ -1,4 +1,4 @@
-import { Model, Schema } from "mongoose";
+import { HydratedDocument, Model, Schema } from "mongoose";
 import connection from "../database";
 import { InsufficientBalanceError } from "../errors";
 
@@ -14,7 +14,7 @@ interface IUserMethods {
 }
 
 export interface IUserModel extends Model<IUser, {}, IUserMethods> {
-    findOneOrCreate: (condition: any, schema: any) => Promise<any>;
+    findOneOrCreate: (condition: Object, schema: Object) => Promise<HydratedDocument<IUser, IUserMethods>>;
 }
 
 export const UserSchema = new Schema<IUser, IUserModel, IUserMethods>({
