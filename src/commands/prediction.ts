@@ -72,7 +72,7 @@ export const command: Command = {
                 await start(interaction);
                 break;
             case "stop":
-                await stop(interaction);
+                await stop(interaction, client!);
                 break;
         }
     }
@@ -141,6 +141,11 @@ const start = async (interaction: ChatInputCommandInteraction<"cached">): Promis
     await interaction.showModal(modal);
 }
 
-const stop = async (interaction: ChatInputCommandInteraction<"cached">): Promise<void> => {
-    await interaction.followUp("WIP")
+const stop = async (interaction: ChatInputCommandInteraction<"cached">, client: ExtendedClient): Promise<void> => {
+    const predictionId = interaction.options.getString("prediction", true);
+    const prediction = client.predictions.get(predictionId)!;
+
+    prediction.stop();
+
+    await interaction.followUp({ content: "Prédiction terminée", ephemeral: true});
 }
