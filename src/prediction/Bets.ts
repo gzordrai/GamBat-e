@@ -1,5 +1,6 @@
 export interface Bet {
     userId: string;
+    username: string;
     amount: number;
     choice: number;
 }

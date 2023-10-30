@@ -42,6 +42,7 @@ const handlePredictionModal = async (interaction: ModalSubmitInteraction<"cached
     interaction.followUp({ embeds: [predection.createEmbed()], components: [row], ephemeral: false })
         .then((message: Message) => {
             predection.setMessage(message);
+            predection.start();
             client.predictions.set(message.id, predection);
         });
 }
@@ -57,14 +58,18 @@ const handleBetModal = async (interaction: ModalSubmitInteraction<"cached">, cli
 
     const user = await User.findOneOrCreate({ id: interaction.user.id }, { id: interaction.user.id });
 
-    if (!(await user.has(bet)))
+    if (!(await user.has(bet))) {
         interaction.followUp({ content: "Vous n'avez pas assez de points pour faire ce pari.", ephemeral: true });
-    else
+        return;
+    } else
         await user.subsFromBalance(bet);
 
     prediction.addBet({
         userId: interaction.user.id,
+        username: interaction.user.username,
         choice: parseInt(interaction.customId.split('-')[3]),
         amount: bet
     });
+
+    await interaction.followUp({ content: `Vous avez ajouté ${bet} points a votre pari`, ephemeral: true });
 }
