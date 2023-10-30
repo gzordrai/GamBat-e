@@ -8,11 +8,11 @@ config({ path: "../.env" });
 
 const client: ExtendedClient = new ExtendedClient({
     intents: [
-        GatewayIntentBits.Guilds
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildVoiceStates
     ],
-    partials: [
-
-    ]
+    partials: []
 });
 const commandsPath: string = path.join(__dirname, "commands");
 const eventsPath: string = path.join(__dirname, "events");
