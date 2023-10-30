@@ -1,6 +1,6 @@
 import { assert, expect } from "chai";
 import { describe, it } from "mocha";
-import { User, IUser } from "../../../src/database/models/user.model";
+import { User } from "../../../src/database/models/user.model";
 import { InsufficientBalanceError } from "../../../src/database/errors";
 
 describe("User Model", () => {
@@ -16,7 +16,7 @@ describe("User Model", () => {
 
         await user.save();
 
-        const result: IUser | null = await User.findOne({ id: "123456" });
+        const result = await User.findOne({ id: "123456" });
 
         expect(result).to.exist;
         expect(result?.id).to.equal("123456");
@@ -32,7 +32,7 @@ describe("User Model", () => {
         await user.save();
         await user.addToBalance(50);
 
-        const result: IUser | null = await User.findOne({ id: "123456" });
+        const result = await User.findOne({ id: "123456" });
 
         expect(result?.balance).to.equal(150);
     });
@@ -46,7 +46,7 @@ describe("User Model", () => {
         await user.save();
         await user.subsFromBalance(50);
 
-        const result: IUser | null = await User.findOne({ id: "123456" });
+        const result = await User.findOne({ id: "123456" });
 
         expect(result?.balance).to.equal(50);
     });
