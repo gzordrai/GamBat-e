@@ -142,10 +142,11 @@ const start = async (interaction: ChatInputCommandInteraction<"cached">): Promis
 }
 
 const stop = async (interaction: ChatInputCommandInteraction<"cached">, client: ExtendedClient): Promise<void> => {
-    const predictionId = interaction.options.getString("prediction", true);
-    const prediction = client.predictions.get(predictionId)!;
+    const predictionId: string = interaction.options.getString("prediction", true);
+    const winner: string = interaction.options.getString("winner", true);
+    const prediction: Prediction = client.predictions.get(predictionId)!;
 
-    prediction.stop();
+    prediction.stop(parseInt(winner));
 
     await interaction.followUp({ content: "Prédiction terminée", ephemeral: true});
 }

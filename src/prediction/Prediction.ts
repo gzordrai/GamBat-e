@@ -2,6 +2,7 @@ import { EmbedBuilder, Message } from "discord.js";
 import { Choice, Choices } from "./Choices";
 import { Bet, Bets } from "./Bets";
 import { User } from "../database/models/user.model";
+import { updateRoles } from "../utils";
 
 export class Prediction {
     private message: Message | null;
@@ -32,14 +33,16 @@ export class Prediction {
         }, this.timer * 1000);
     }
 
-    public async stop() {
+    public async stop(id: number) {
         Promise.all(
             this.bets.map(async (bet: Bet) => {
+                if (bet.choice !== id) return;
+
                 const user = await User.findOne({ id: bet.userId });
 
                 if (user) {
-                    user.balance += bet.amount * 1.25;
-                    await user.save();
+                    await user.addToBalance(Math.floor(bet.amount * 1.25));
+                    await updateRoles(this.message!.guild!.members.cache.get(user.id)!);
                 }
             })
         );
