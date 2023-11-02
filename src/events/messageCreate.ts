@@ -1,6 +1,7 @@
 import { Events, Message } from "discord.js";
 import { Event, ExtendedClient } from "../bot";
 import { Cooldowns, User } from "../database/models/user.model";
+import { updateRoles } from "../utils";
 
 const event: Event = {
     name: Events.MessageCreate,
@@ -14,6 +15,7 @@ const event: Event = {
 
         await user.addToBalance(parseInt(process.env.MESSAGE_REWARD!));
         await user.resetCooldown(Cooldowns.MESSAGE);
+        await updateRoles(message.member!);
     },
 };
 

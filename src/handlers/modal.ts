@@ -2,6 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, ModalSubmitInter
 import { ExtendedClient } from "../bot";
 import { Prediction } from "../prediction";
 import { User } from "../database/models/user.model";
+import { updateRoles } from "../utils";
 
 export const handleModal = async (interaction: ModalSubmitInteraction<"cached">, client: ExtendedClient): Promise<void> => {
     switch (interaction.customId.split('-')[0]) {
@@ -63,6 +64,8 @@ const handleBetModal = async (interaction: ModalSubmitInteraction<"cached">, cli
         return;
     } else
         await user.subsFromBalance(bet);
+
+    await updateRoles(interaction.member!);
 
     prediction.addBet({
         userId: interaction.user.id,

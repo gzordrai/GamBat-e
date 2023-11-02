@@ -1,6 +1,7 @@
 import { Events, VoiceState } from "discord.js";
 import { Event, ExtendedClient } from "../bot";
 import { Cooldowns, User } from "../database/models/user.model";
+import { updateRoles } from "../utils";
 
 const event: Event = {
     name: Events.VoiceStateUpdate,
@@ -17,6 +18,7 @@ const event: Event = {
             const reward: number = Math.floor(minutes * parseFloat(process.env.VOCAL_REWARD!));
 
             await user.addToBalance(reward);
+            await updateRoles(oldState.member!);
         }
     },
 };
