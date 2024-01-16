@@ -24,7 +24,7 @@ const handlePredictionModal = async (interaction: ModalSubmitInteraction<"cached
     interaction.fields.fields.forEach((field) => {
         if (field.value !== "") {
             if (field.customId.startsWith("choice")) {
-                predection.addChoice({ id: i, name: field.value, oods: 1 });
+                predection.addChoice({ id: i, name: field.value, odds: 1 });
 
                 row.addComponents(
                     new ButtonBuilder()
